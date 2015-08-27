@@ -192,7 +192,7 @@ $(echo $runtimes | fold -s -w 65)"
     done <<<"$solver_result"
 fi
 
-status "Installing system moncul..."
+status "Installing system packages..."
 
 # we need to run things in here, set it up!
 mkdir -p /app/.heroku
@@ -277,6 +277,11 @@ if [[ "${PHP_VERSION}" ]]; then
     if [[ ${#exts[@]} -eq 0 || ! ${exts[*]} =~ "zend-opcache" ]]; then
         install_ext "zend-opcache" "automatic"
         exts+=("zend-opcache")
+    fi
+
+    if [[ ${#exts[@]} -eq 0 || ! ${exts[*]} =~ "enchant" ]]; then
+        install_ext "enchant" "automatic"
+        exts+=("enchant")
     fi
 fi
 
