@@ -23,7 +23,7 @@ export PATH=/app/.heroku/php/bin:$PATH:${PATH}
 phpize
 ./configure \
     --prefix=${OUT_PREFIX} \
-    --with-enchant
+
 make -s -j 9
 # php was a build dep, and it's in $OUT_PREFIX. nuke that, then make install so all we're left with is the extension
 rm -rf ${OUT_PREFIX}/*
