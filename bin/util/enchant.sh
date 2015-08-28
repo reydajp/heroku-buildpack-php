@@ -19,7 +19,7 @@ echo "-----> Building enchant ${dep_version}..."
 curl -L ${dep_url} | tar xz
 
 pushd ${dep_dirname}
-export PATH=${OUT_PREFIX}/bin:${PATH}
+export PATH=/app/.heroku/php/bin:$PATH:${PATH}
 phpize
 ./configure \
     --prefix=${OUT_PREFIX} \
