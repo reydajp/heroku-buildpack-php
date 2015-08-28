@@ -11,7 +11,7 @@ set -eux
 DEFAULT_VERSION="1.1.0"
 dep_version=${VERSION:-$DEFAULT_VERSION}
 dep_dirname=enchant-${dep_version}
-dep_archive_name=${dep_dirname}.tar.gz
+dep_archive_name=${dep_dirname}.tgz
 dep_url=http://pecl.php.net/get/${dep_archive_name}
 
 echo "-----> Building enchant ${dep_version}..."
