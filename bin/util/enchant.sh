@@ -13,12 +13,11 @@ dep_version=${VERSION:-$DEFAULT_VERSION}
 dep_dirname=enchant-${dep_version}
 dep_archive_name=${dep_dirname}.tar.gz
 dep_url=http://www.abisource.com/downloads/enchant/1.6.0/${dep_archive_name}
-
 echo "-----> Building enchant ${dep_version}..."
 
 curl -L ${dep_url} | tar xz
 
-pushd ${dep_dirname}
+pushd
 export PATH=${OUT_PREFIX}/bin:${PATH}
 phpize
 ./autogen.sh
@@ -30,7 +29,5 @@ make -s -j 9
 rm -rf ${OUT_PREFIX}/*
 make install -s
 popd
-
-pushd
 
 echo "-----> Done."

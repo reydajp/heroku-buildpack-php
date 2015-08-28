@@ -54,7 +54,7 @@ source $BP_DIR/bin/util/common.sh
 source $BP_DIR/bin/util/newrelic.sh
 source $BP_DIR/bin/util/blackfire.sh
 
-source $BP_DIR/support/libraries/enchant.sh
+source $BP_DIR/bin/util/enchant.sh
 
 # if this is set it prevents Git clones (e.g. for Composer installs from source) during the build in some circumstances, and it is set in SSH Git deploys to Heroku
 unset GIT_DIR
