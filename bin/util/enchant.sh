@@ -20,19 +20,12 @@ curl -L ${dep_url} | tar xz
 pushd ${dep_dirname}
 ./autogen.sh
 ./configure \
-    --prefix=${OUT_PREFIX} \
+    --prefix=/app/.heroku/vendor \
     --with-enchant
 make -s -j 9
 # php was a build dep, and it's in $OUT_PREFIX. nuke that, then make install so all we're left with is the extension
 rm -rf ${OUT_PREFIX}/*
 make install -s
 popd
-
-BUILD_DIR=$1
-ln -s $BUILD_DIR/.heroku /app/.heroku
-export PATH=/app/.heroku/php/bin:$PATH
-bash ./install
-
-
 
 echo "-----> Done."
