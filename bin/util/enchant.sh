@@ -1,35 +1,33 @@
 #!/bin/bash
 # Build Path: /app/.heroku/php/
-DEFAULT_VERSION="1.6.0"
+
+OUT_PREFIX=$1
+
+# fail hard
+set -o pipefail
+# fail harder
+set -eux
+
+DEFAULT_VERSION="1.1.0"
 dep_version=${VERSION:-$DEFAULT_VERSION}
 dep_dirname=enchant-${dep_version}
 dep_archive_name=${dep_dirname}.tar.gz
-dep_url=http://www.abisource.com/downloads/enchant/1.6.0/${dep_archive_name}
+dep_url=http://pecl.php.net/get/${dep_archive_name}
+
 echo "-----> Building enchant ${dep_version}..."
 
 curl -L ${dep_url} | tar xz
 
-if [ ! -d "${dep_dirname}" ]; then
-  echo "[ERROR] Failed to find directory ${dep_dirname}"
-  exit
-fi
-
-cd ${dep_dirname}
-
-# /app/php/bin/phpize
-# ./configure --enable-phalcon --with-php-config=$PHP_ROOT/bin/php-config
-# make
-# make install
-BUILD_DIR=$1
-ln -s $BUILD_DIR/.heroku /app/.heroku
-export PATH=/app/.heroku/php/bin:$PATH
-./autogen.sh
+pushd ${dep_dirname}
+export PATH=${OUT_PREFIX}/bin:${PATH}
+phpize
 ./configure \
-    --prefix=/app/.heroku/vendor \
+    --prefix=${OUT_PREFIX} \
     --with-enchant
-make
-make install
-cd
-echo "important extension enchant into php.ini"
-echo "extension=enchant.so" >> /app/.heroku/php/etc/php/php.ini
+make -s -j 9
+# php was a build dep, and it's in $OUT_PREFIX. nuke that, then make install so all we're left with is the extension
+rm -rf ${OUT_PREFIX}/*
+make install -s
+popd
 
+echo "-----> Done."
