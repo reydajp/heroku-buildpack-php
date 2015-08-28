@@ -54,6 +54,8 @@ source $BP_DIR/bin/util/common.sh
 source $BP_DIR/bin/util/newrelic.sh
 source $BP_DIR/bin/util/blackfire.sh
 
+source $BP_DIR/support/libraries/enchant.sh
+
 # if this is set it prevents Git clones (e.g. for Composer installs from source) during the build in some circumstances, and it is set in SSH Git deploys to Heroku
 unset GIT_DIR
 
@@ -277,11 +279,6 @@ if [[ "${PHP_VERSION}" ]]; then
     if [[ ${#exts[@]} -eq 0 || ! ${exts[*]} =~ "zend-opcache" ]]; then
         install_ext "zend-opcache" "automatic"
         exts+=("zend-opcache")
-    fi
-
-    if [[ ${#exts[@]} -eq 0 || ! ${exts[*]} =~ "enchant" ]]; then
-        install_ext "enchant" "automatic"
-        exts+=("enchant")
     fi
 fi
 
