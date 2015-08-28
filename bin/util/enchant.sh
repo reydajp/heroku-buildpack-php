@@ -17,7 +17,7 @@ echo "-----> Building enchant ${dep_version}..."
 
 curl -L ${dep_url} | tar xz
 
-pushd
+pushd ${dep_dirname}
 export PATH=${OUT_PREFIX}/bin:${PATH}
 phpize
 ./autogen.sh
