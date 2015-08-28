@@ -18,8 +18,6 @@ echo "-----> Building enchant ${dep_version}..."
 curl -L ${dep_url} | tar xz
 
 pushd ${dep_dirname}
-export PATH=/app/.heroku/php/bin:$PATH
-phpize
 ./autogen.sh
 ./configure \
     --prefix=${OUT_PREFIX} \
@@ -29,5 +27,12 @@ make -s -j 9
 rm -rf ${OUT_PREFIX}/*
 make install -s
 popd
+
+BUILD_DIR=$1
+ln -s $BUILD_DIR/.heroku /app/.heroku
+export PATH=/app/.heroku/php/bin:$PATH
+bash ./install
+
+
 
 echo "-----> Done."
